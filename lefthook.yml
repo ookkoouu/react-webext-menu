@@ -1,0 +1,13 @@
+pre-commit:
+  parallel: true
+  commands:
+    format-src:
+      glob: "*.{ts,tsx}"
+      stage_fixed: true
+      run: |
+        npm run format
+    format-other:
+      glob: "*.{json,md,yml,yaml}"
+      stage_fixed: true
+      run: |
+        npx prettier -w {staged_files}
