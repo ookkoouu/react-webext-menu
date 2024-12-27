@@ -4,15 +4,16 @@ import type { RequiredOf } from "./utils";
 
 type MenuCreateProps = Omit<Menus.CreateCreatePropertiesType, "onclick">;
 
-export interface MenuComponentProps
-  extends RequiredOf<MenuCreateProps, "title"> {
+export interface FiberProps extends RequiredOf<MenuCreateProps, "title"> {
   onClick?: (info: Menus.OnClickData, tab?: Tabs.Tab) => void;
   children?: ReactNode;
   key?: React.Key;
 }
 
+export type BaseElementProps = Omit<FiberProps, "id" | "type" | "parentId">;
+
 export type Type = Menus.ItemType;
-export type Props = Omit<MenuComponentProps, "key">;
+export type Props = Omit<FiberProps, "key">;
 export type InstanceProps = RequiredOf<Props, "id" | "type">;
 export type Instance = {
   readonly type: Type;
@@ -26,7 +27,14 @@ export type Instance = {
   commitUpdate(newProps: Props): Promise<void>;
   dispose(): Promise<void>;
 };
-export type Container = (Instance | TextInstance)[];
+export interface Container {
+  children: (Instance | TextInstance)[];
+  api: MenuApi;
+  overrideProps: Pick<
+    Props,
+    "contexts" | "documentUrlPatterns" | "targetUrlPatterns"
+  >;
+}
 export type TextInstance = null;
 export type SuspenceInstance = null;
 export type HydratableInstance = null;
@@ -36,3 +44,8 @@ export type UpdatePayload = undefined;
 export type ChildSet = Container;
 export type TimeoutHnadle = number;
 export type NoTimeout = -1;
+
+export type MenuApi = Pick<
+  Menus.Static,
+  "create" | "onClicked" | "remove" | "update"
+>;

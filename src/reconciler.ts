@@ -40,8 +40,11 @@ export const reconciler = createReconciler<
   isPrimaryRenderer: true,
 
   createInstance(type, props, rootContainer, hostContext): Instance {
-    console.log("createInstance:", { rootContainer, hostContext });
-    return createMenuInstance(type, props);
+    return createMenuInstance(
+      type,
+      { ...props, ...rootContainer.overrideProps },
+      rootContainer.api,
+    );
   },
 
   appendChild(parent, child) {
@@ -76,25 +79,29 @@ export const reconciler = createReconciler<
     return (recyclableInstance ?? instance).clone(newProps, keepChildren);
   },
 
-  createContainerChildSet: () => [],
+  createContainerChildSet: (container) => {
+    return {
+      ...container,
+      children: [],
+    } satisfies Container;
+  },
 
   appendChildToContainerChildSet(childSet, child) {
-    childSet.push(child);
+    childSet.children.push(child);
   },
 
   replaceContainerChildren(container, newChildren) {
-    console.log("replaceContainerChildren:", { container, newChildren });
-    for (const instance of container) {
+    for (const instance of container.children) {
       instance?.dispose();
     }
 
-    for (const instance of newChildren) {
+    for (const instance of newChildren.children) {
       instance?.commitCreate();
     }
   },
 
   detachDeletedInstance: (node: Instance): void => {
-    node.dispose().catch((err) => console.log("detach:", node, err));
+    node.dispose().catch(() => null);
   },
 
   scheduleTimeout: setTimeout,

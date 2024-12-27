@@ -2,10 +2,6 @@ export function randomStr() {
   return Math.random().toString(36).slice(2);
 }
 
-export function randomNum() {
-  return Math.floor(Math.random() * 1e12);
-}
-
 export function omit<T extends {}, K extends keyof T>(
   obj: T,
   ...keys: K[]
