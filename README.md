@@ -5,7 +5,7 @@ React renderer for the browser extension's context menu.
 ## Install
 
 ```sh
-npm i @okou/react-webext-menu react@18 webextension-polyfill
+npm i @okou/react-webext-menu react@18
 ```
 
 > [!WARNING]
