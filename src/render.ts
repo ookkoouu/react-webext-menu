@@ -1,3 +1,5 @@
+import type { FiberRoot } from "react-reconciler";
+import { ConcurrentRoot } from "react-reconciler/constants";
 import type { Menus } from "webextension-polyfill";
 import { reconciler } from "./reconciler";
 import type { MenuApi } from "./types";
@@ -14,11 +16,11 @@ export interface RenderOptions {
   targetUrlPatterns?: string[];
 }
 
-export const render = (
+export function render(
   node: React.ReactNode,
   api: MenuApi,
   opts: RenderOptions = {},
-) => {
+): FiberRoot {
   if (!apiPermitted(api)) {
     throw new Error(`Permission "contextMenus" required.`);
   }
@@ -33,13 +35,18 @@ export const render = (
       },
       children: [],
     },
-    0,
+    ConcurrentRoot,
     null,
     false,
     null,
     "",
-    (err) => console.trace("onRecoverableError:", err),
+    console.error,
     null,
   );
   reconciler.updateContainer(node, root);
-};
+  return root;
+}
+
+export function unmount(root: FiberRoot): void {
+  reconciler.updateContainer(null, root);
+}
