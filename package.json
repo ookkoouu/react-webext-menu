@@ -1,6 +1,6 @@
 {
   "name": "@okou/react-webext-menu",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "React for browser extension contextmenu",
   "license": "MIT",
   "type": "module",
