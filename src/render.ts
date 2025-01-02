@@ -20,31 +20,35 @@ export function render(
   node: React.ReactNode,
   api: MenuApi,
   opts: RenderOptions = {},
-): FiberRoot {
-  if (!apiPermitted(api)) {
-    throw new Error(`Permission "contextMenus" required.`);
-  }
+): Promise<FiberRoot> {
+  return new Promise((resolve, reject) => {
+    if (!apiPermitted(api)) {
+      reject(`Permission "contextMenus" required.`);
+    }
 
-  const root = reconciler.createContainer(
-    {
-      api,
-      overrideProps: {
-        contexts: opts.contexts,
-        documentUrlPatterns: opts.documentUrlPatterns,
-        targetUrlPatterns: opts.targetUrlPatterns,
+    const root = reconciler.createContainer(
+      {
+        api,
+        overrideProps: {
+          contexts: opts.contexts,
+          documentUrlPatterns: opts.documentUrlPatterns,
+          targetUrlPatterns: opts.targetUrlPatterns,
+        },
+        children: [],
       },
-      children: [],
-    },
-    ConcurrentRoot,
-    null,
-    false,
-    null,
-    "",
-    console.error,
-    null,
-  );
-  reconciler.updateContainer(node, root);
-  return root;
+      ConcurrentRoot,
+      null,
+      false,
+      null,
+      "",
+      console.error,
+      null,
+    );
+
+    reconciler.updateContainer(node, root, null, () => {
+      resolve(root);
+    });
+  });
 }
 
 export function unmount(root: FiberRoot): void {
