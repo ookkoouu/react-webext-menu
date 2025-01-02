@@ -12,6 +12,10 @@
     "format": "prettier -w src test && biome check --write src test",
     "test": "vitest run"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ookkoouu/react-webext-menu.git"
+  },
   "files": [
     "src"
   ],
