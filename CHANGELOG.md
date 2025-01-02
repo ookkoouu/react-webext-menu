@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.0.1](https://github.com/ookkoouu/react-webext-menu/compare/v1.0.0...v1.0.1) (2025-01-02)
+
+
+### Miscellaneous Chores
+
+* Add repository field ([feb16e9](https://github.com/ookkoouu/react-webext-menu/commit/feb16e98c039b93c119ccf8356f48ac41b470c08))
+* Release 1.0.1 ([5591ce2](https://github.com/ookkoouu/react-webext-menu/commit/5591ce24d493a4c9d3bbd62342a27844cf900541))
+
 ## [1.0.0](https://github.com/ookkoouu/react-webext-menu/compare/v1.0.0...v1.0.0) (2025-01-02)
 
 
