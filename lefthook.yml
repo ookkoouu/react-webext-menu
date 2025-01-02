@@ -5,7 +5,7 @@ pre-commit:
       glob: "*.{ts,tsx}"
       stage_fixed: true
       run: |
-        npm run format
+        npm run check
     format-other:
       glob: "*.{json,md,yml,yaml}"
       stage_fixed: true
