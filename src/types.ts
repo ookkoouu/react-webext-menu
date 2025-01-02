@@ -10,7 +10,7 @@ export interface FiberProps extends RequiredOf<MenuCreateProps, "title"> {
   key?: React.Key;
 }
 
-export type BaseElementProps = Omit<FiberProps, "id" | "type" | "parentId">;
+export type BaseElementProps = Omit<FiberProps, "type" | "parentId">;
 
 export type Type = Menus.ItemType;
 export type Props = Omit<FiberProps, "key">;
